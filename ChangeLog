@@ -1,0 +1,14 @@
+
+1.0 -  18/06/2007
+- Added sendRegister function to rendezVousServer object.
+- Changed class IPProtocolNumber to Transport Type
+
+0.9.2 - 19/03/2007
+- Changed the Reactive Routing Protocol
+
+0.9.1 - 31/10/2006
+- Fixed compilation bug in some systems
+- Added ChangeLog and README files
+
+0.9 - 13/10/2006 
+Initial Release

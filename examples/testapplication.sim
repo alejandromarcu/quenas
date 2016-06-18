@@ -1,0 +1,59 @@
+simulator.formatter.setStylesheet('templates\testapplication.xsl')
+
+simulator.notifFilter.accept('node.testApplication.received')
+
+setAddressLength(6)
+
+newNode(abcd)
+newNode(b)
+newNode(c)
+newNode(d)
+newNode(e)
+newNode(f)
+newNode(g)
+newNode(h)
+newNode(z)
+newNode(w)
+
+newConnection(abcd,b)
+newConnection(abcd,g)
+newConnection(b,d)
+newConnection(b,c)
+newConnection(c,e)
+newConnection(e,f)
+newConnection(f,h)
+newConnection(g,h)
+newConnection(g,z)
+newConnection(z,w)
+
+
+allNodes.allConnections.setDelay(13 ms)
+
+
+[1 s] node(abcd).joinNetwork
+[2 s] node(b).joinNetwork
+[3 s] node(c).joinNetwork
+[4 s] node(d).joinNetwork
+[5 s] node(e).joinNetwork
+[6 s] node(f).joinNetwork
+[7 s] node(g).joinNetwork
+[8 s] node(h).joinNetwork
+[9 s] node(z).joinNetwork
+[10 s] node(w).joinNetwork
+
+[11 s] node(f).testApplication.send(abcd)
+[12 s] node(f).testApplication.send(abcd)
+
+[15 s] node(f).testApplication.send(g)
+[15.5 s] node(f).testApplication.send(g)
+
+
+[20 s] node(f).testApplication.send(abcd)
+[21 s] node(f).testApplication.send(abcd)
+
+[30 s] node(f).testApplication.send(g)
+[31 s] node(z).testApplication.send(e)
+
+[40 s] allNodes.query
+
+        

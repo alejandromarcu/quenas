@@ -1,0 +1,34 @@
+setAddressLength(4)
+
+newNode(a)
+newNode(b)
+newNode(c)
+newNode(d)
+newNode(e)
+newConnection(a,b)
+newConnection(a,c)
+newConnection(b,d)
+newConnection(c,d)
+newConnection(a,e)
+newConnection(d,e)
+
+allNodes.allConnections.setDelay(10 ms)
+
+node(a).joinNetwork
+
+
+[5 s]  node(c).joinNetwork
+[10 s] node(b).joinNetwork
+ 
+[11 s] node(d).joinNetwork
+
+[19 s] node(a).assertPrimaryAddress('0000/2')
+       node(c).assertPrimaryAddress('1000/2')
+       node(b).assertPrimaryAddress('0100/2')
+       node(d).assertPrimaryAddress('1100/2')
+
+[20 s] node(c).leaveNetwork
+
+[30 s] node(e).joinNetwork
+
+[35 s] node(e).assertPrimaryAddress('1000/2')

@@ -1,0 +1,13 @@
+# Hello World simulation example!
+setAddressLength(4)
+
+newNode(hello)
+newNode(world)
+
+newConnection(hello, world, 2048 Kbps, 1 ms)
+
+
+[1 s] node(hello).joinNetwork()
+[10 s] node (world).joinNetwork()
+
+[15 s] allNodes.query()

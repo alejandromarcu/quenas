@@ -1,0 +1,39 @@
+# Test if address space is correctly retrieved when disconnecting
+setAddressLength(4)
+
+newNode(a)
+newNode(b)
+newNode(c)
+newNode(d)
+newNode(e)
+newNode(f)
+
+newConnection(a,b)
+newConnection(a,c)
+newConnection(a,d)
+newConnection(a,f)
+newConnection(d,e)
+
+
+allNodes.allConnections.setDelay(10 ms)
+
+[10 s] node(a).joinNetwork
+[20 s] node(b).joinNetwork
+[30 s] node(c).joinNetwork
+[40 s] node(d).joinNetwork
+[50 s] node(e).joinNetwork
+
+[55 s]  
+node(a).assertPrimaryAddress('0000/3')
+node(b).assertPrimaryAddress('1000/1')
+node(c).assertPrimaryAddress('0100/2')
+node(d).assertPrimaryAddress('0010/4')
+node(e).assertPrimaryAddress('0011/4')
+
+# node d leaves, but has e as a child, so a can't get that space back.
+[60 s] node(d).leaveNetwork
+
+
+[70 s]
+node(a).assertPrimaryAddress('0000/3')
+

@@ -1,0 +1,54 @@
+# Test if address space is correctly retrieved when disconnecting
+setAddressLength(4)
+
+newNode(a)
+newNode(b)
+newNode(c)
+newNode(d)
+newNode(e)
+newNode(f)
+
+newConnection(a,b)
+newConnection(a,c)
+newConnection(a,d)
+newConnection(a,f)
+newConnection(d,e)
+
+
+allNodes.allConnections.setDelay(10 ms)
+
+[10 s] node(a).joinNetwork
+[20 s] node(b).joinNetwork
+[30 s] node(c).joinNetwork
+[40 s] node(d).joinNetwork
+[50 s] node(e).joinNetwork
+
+[55 s]  
+node(a).assertPrimaryAddress('0000/3')
+node(b).assertPrimaryAddress('1000/1')
+node(c).assertPrimaryAddress('0100/2')
+node(d).assertPrimaryAddress('0010/4')
+node(e).assertPrimaryAddress('0011/4')
+
+
+[60 s] node(c).leaveNetwork
+
+
+[65 s]
+# node a has fragmented empty space, but can't get it back.
+node(a).assertPrimaryAddress('0000/3')
+
+
+[70 s] node(e).leaveNetwork
+[80 s] node(d).leaveNetwork
+
+
+[85 s]
+# now that node d and its children left, node a can get back that space as well c's space 
+node(a).assertPrimaryAddress('0000/1')
+
+[90 s] node(b).leaveNetwork
+
+
+[95 s]
+node(a).assertPrimaryAddress('0000/0')

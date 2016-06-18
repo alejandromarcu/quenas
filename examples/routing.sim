@@ -1,0 +1,49 @@
+# Example of tracing routes and seeing routing tables
+simulator.formatter.setStylesheet('templates\traceroute.xsl')
+
+simulator.notifFilter.accept('node.routing')
+
+setAddressLength(4)
+
+newNode(a)
+newNode(b)
+newNode(c)
+newNode(d)
+newNode(e)
+newNode(f)
+newNode(g)
+newNode(h)
+newNode(z)
+
+newConnection(a,b)
+newConnection(a,g)
+newConnection(b,d)
+newConnection(b,c)
+newConnection(c,e)
+newConnection(e,f)
+newConnection(f,h)
+newConnection(g,h)
+newConnection(g,z)
+
+allNodes.allConnections.setDelay(10 ms)
+
+
+[10 s] node(a).joinNetwork
+[20 s] node(b).joinNetwork
+[30 s] node(c).joinNetwork
+[40 s] node(d).joinNetwork
+[50 s] node(e).joinNetwork
+[60 s] node(f).joinNetwork
+[70 s] node(g).joinNetwork
+[80 s] node(h).joinNetwork
+[90 s] node(z).joinNetwork
+
+
+[100 s] node(d).traceRoute.trace('0101')
+[105 s] node(d).traceRoute.trace('0101')
+[110 s] node(z).traceRoute.trace('1111')
+[115 s] node(f).traceRoute.trace('0000')
+
+[150 s] node(d).traceRoute.trace('0101')
+
+[160 s] allNodes.routing.table.query

@@ -1,0 +1,36 @@
+# Test the address assignment including secondary addresses using the example
+# from "Indirect routing in the Hypercube" paper.
+setAddressLength(4)
+
+newNode(a)
+newNode(b)
+newNode(c)
+newNode(d)
+newNode(e)
+newNode(f)
+newNode(g)
+newNode(h)
+
+newConnection(a,b)
+newConnection(a,g)
+newConnection(b,d)
+newConnection(b,c)
+newConnection(c,e)
+newConnection(e,f)
+newConnection(f,h)
+newConnection(g,h)
+
+allNodes.allConnections.setDelay(10 ms)
+
+
+[10 s] node(a).joinNetwork
+[20 s] node(b).joinNetwork
+[30 s] node(c).joinNetwork
+[40 s] node(d).joinNetwork
+[50 s] node(e).joinNetwork
+[60 s] node(f).joinNetwork
+[70 s] node(g).joinNetwork
+[80 s] node(h).joinNetwork
+
+[100 s] allNodes.query
+

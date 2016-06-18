@@ -1,0 +1,23 @@
+# test the address assignment for a connected to b, c and d.
+
+setAddressLength(4)
+
+newNode(a)
+newNode(b)
+newNode(c)
+newNode(d)
+
+newConnection(a,b)
+newConnection(a,c)
+newConnection(a,d)
+
+
+[10 s] node(a).joinNetwork
+[20 s] node(b).joinNetwork
+[30 s] node(c).joinNetwork
+[40 s] node(d).joinNetwork
+ 
+[60 s] node(a).assertPrimaryAddress('0000/3')
+       node(b).assertPrimaryAddress('1000/1')
+       node(c).assertPrimaryAddress('0100/2')
+       node(d).assertPrimaryAddress('0010/3')

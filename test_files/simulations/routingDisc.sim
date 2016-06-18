@@ -1,0 +1,45 @@
+# Test routing when a part of the route is broken because a node got disconnected
+setAddressLength(4)
+
+newNode(a)
+newNode(b)
+newNode(c)
+newNode(d)
+newNode(e)
+newNode(f)
+newNode(g)
+newNode(h)
+
+newConnection(a,b)
+newConnection(a,g)
+newConnection(b,d)
+newConnection(b,c)
+newConnection(c,e)
+newConnection(e,f)
+newConnection(f,h)
+newConnection(g,h)
+
+allNodes.allConnections.setDelay(10 ms)
+
+
+[1 s] node(a).joinNetwork
+[2 s] node(b).joinNetwork
+[3 s] node(c).joinNetwork
+[4 s] node(d).joinNetwork
+[5 s] node(e).joinNetwork
+[6 s] node(f).joinNetwork
+[7 s] node(g).joinNetwork
+[8 s] node(h).joinNetwork
+
+# now it tries to go by the shortest path
+[10 s] node(a).traceRoute.assert('1110', 'b;c;e')
+
+[11 s] node(c).leaveNetwork
+
+# try again to use the shortest path, but can't pass through c, so it must go back and find another path
+[12 s] node(a).traceRoute.assert('1110', 'b;d;b;a;g;h;f;e')
+
+# now routing tables should have more information and lead the packet directly
+[13 s] node(a).traceRoute.assert('1110', 'g;h;f;e')
+
+[14 s] allNodes.query
